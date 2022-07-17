@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {Counter} from "./Counter/Counter";
 import {Button} from "./Button/Button";
-import {json} from "stream/consumers";
+
+
 
 function App() {
     const [count, setCount] = useState(0)
@@ -21,6 +21,11 @@ function App() {
         localStorage.setItem('Count', JSON.stringify(count))
         localStorage.setItem('Count + 2', JSON.stringify(count + 2))
     }
+
+    const setSessionStorage = () => {
+        sessionStorage.setItem('count + 5',JSON.stringify(count + 5))
+    }
+
     const getLocalStorage = () => {
 
         let newCountLocalStorage = localStorage.getItem('Count')
@@ -45,6 +50,7 @@ function App() {
                 <Button disabled={count === maxValue} onClick={addCount}>COUNT</Button>
                 <Button onClick={resetCount}>RESET</Button>
                 <Button onClick={setLocalStorage}>setLocalStorage</Button>
+                <Button onClick={setSessionStorage}>setSessionStorage</Button>
                 <Button onClick={getLocalStorage}>getLocalStorage</Button>
                 <Button onClick={clearLocalStorage}>clearLocalStorage</Button>
                 <Button onClick={removeLocalStorage}>removeLocalStorage</Button>
