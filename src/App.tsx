@@ -1,26 +1,58 @@
-import React from 'react';
+import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Counter} from "./Counter/Counter";
+import {Button} from "./Button/Button";
+import {json} from "stream/consumers";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [count, setCount] = useState(0)
+    const maxValue = 15
+    const minValue = 0
+
+    const addCount = () => {
+        setCount(count + 1)
+    }
+    const resetCount = () => {
+        setCount(0)
+    }
+
+    const setLocalStorage = () => {
+        localStorage.setItem('Count', JSON.stringify(count))
+        localStorage.setItem('Count + 2', JSON.stringify(count + 2))
+    }
+    const getLocalStorage = () => {
+
+        let newCountLocalStorage = localStorage.getItem('Count')
+        if (newCountLocalStorage) {
+            setCount(JSON.parse(newCountLocalStorage))
+        }
+
+    }
+
+    const clearLocalStorage = () => {
+        localStorage.clear()
+        setCount(0)
+    }
+    const removeLocalStorage = () => {
+      localStorage.removeItem('Count')
+    }
+
+    return (
+        <div className='app'>
+            <Counter count={count}/>
+            <div className='buttons'>
+                <Button disabled={count === maxValue} onClick={addCount}>COUNT</Button>
+                <Button onClick={resetCount}>RESET</Button>
+                <Button onClick={setLocalStorage}>setLocalStorage</Button>
+                <Button onClick={getLocalStorage}>getLocalStorage</Button>
+                <Button onClick={clearLocalStorage}>clearLocalStorage</Button>
+                <Button onClick={removeLocalStorage}>removeLocalStorage</Button>
+            </div>
+
+        </div>
+
+    );
 }
 
 export default App;
